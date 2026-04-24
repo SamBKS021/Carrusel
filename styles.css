@@ -1,0 +1,288 @@
+:root {
+  --bg-1: #eef5ef;
+  --bg-2: #dce8df;
+  --bg-3: #f7faf6;
+  --panel: rgba(255, 255, 255, 0.38);
+  --panel-strong: rgba(255, 255, 255, 0.58);
+  --border: rgba(255, 255, 255, 0.64);
+  --text: #183127;
+  --muted: rgba(24, 49, 39, 0.68);
+  --shadow: 0 24px 58px rgba(80, 105, 92, 0.18);
+  --menu-bar-offset: 18px;
+  --sidebar-text: #fffdf8;
+  --sidebar-muted: rgba(255, 253, 248, 0.82);
+  --sidebar-filter: brightness(0.86) saturate(0.9);
+  --panel-highlight: rgba(255, 255, 255, 0.34);
+  --ambient-glow: rgba(181, 214, 194, 0.2);
+  --texture-opacity: 0.8;
+  --day-overlay-opacity: 0.86;
+  --day-overlay-a: rgba(255, 255, 255, 0.48);
+  --day-overlay-b: rgba(172, 203, 187, 0.2);
+  --day-overlay-c: rgba(112, 148, 128, 0.14);
+  --frame-shadow: 0 22px 22px -14px rgba(61, 82, 70, 0.38), 0 7px 11px -8px rgba(34, 49, 41, 0.32);
+  --frame-border: rgba(255, 255, 255, 0.86);
+  --frame-edge: rgba(76, 104, 90, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(31, 46, 40, 0.12), transparent 15%),
+    url("assets/carousel/fondo.png") center / cover no-repeat,
+    linear-gradient(135deg, #f6f8f3 0%, #edf3ed 38%, #dce8df 100%);
+  transition: background 1.4s ease, color 0.8s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 44% 42%, rgba(255, 255, 255, 0.16), transparent 44%),
+    radial-gradient(ellipse at 8% 94%, rgba(75, 103, 88, 0.08), transparent 36%),
+    radial-gradient(ellipse at 96% 12%, rgba(38, 55, 48, 0.1), transparent 28%);
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  transition: opacity 1.2s ease;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(37, 52, 46, 0.12), transparent 12% 84%, rgba(84, 111, 96, 0.06)),
+    radial-gradient(ellipse at 46% 42%, rgba(255, 255, 255, 0.18), transparent 44%);
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  transition: opacity 1.6s ease;
+}
+
+body.theme-day {
+  --texture-opacity: 0.78;
+  --day-overlay-opacity: 0.88;
+}
+
+.wallpaper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: clamp(24px, 2.8vw, 46px);
+  width: 100%;
+  height: 100vh;
+  padding: calc(28px + var(--menu-bar-offset)) clamp(24px, 3vw, 54px) 28px;
+}
+
+.sidebar {
+  position: relative;
+  width: clamp(220px, 24vw, 340px);
+  min-width: 220px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid var(--frame-border);
+  outline: 1px solid rgba(78, 103, 90, 0.13);
+  outline-offset: -2px;
+  background: #000;
+  box-shadow:
+    0 32px 64px rgba(45, 63, 55, 0.22),
+    0 8px 20px rgba(39, 52, 47, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  transition: border-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+.sidebar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: var(--sidebar-filter);
+  transition: filter 1s ease;
+}
+
+.sidebar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.28) 35%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+}
+
+.sidebar-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px 24px;
+  color: var(--sidebar-text);
+}
+
+.time-block {
+  width: 100%;
+}
+
+.hora {
+  font-size: clamp(3rem, 5.1vw, 4.8rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: var(--sidebar-text);
+  transition: color 0.8s ease;
+}
+
+.fecha {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: var(--sidebar-muted);
+  text-transform: capitalize;
+}
+
+.frase {
+  margin: 18px 0 0;
+  max-width: 95%;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--sidebar-text);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.frase.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.content-grid {
+  width: 100%;
+  height: 100%;
+}
+
+.content-primary {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(22px, 3vh, 34px);
+  min-width: 0;
+  height: 100%;
+}
+
+.top-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 28px);
+  align-items: start;
+  justify-content: start;
+  min-width: 0;
+}
+
+.gallery-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 23px;
+  border: 0;
+  background: #f7f5ee;
+  box-shadow: var(--frame-shadow);
+  aspect-ratio: 1;
+  transform: translateZ(0);
+}
+
+.gallery-card img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: 1;
+  transition: opacity 0.42s ease, filter 0.42s ease;
+}
+
+.gallery-card.is-changing img {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+.gallery-card::before,
+.gallery-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gallery-card::before {
+  display: none;
+}
+
+.gallery-card::after {
+  display: none;
+}
+
+.center-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.center-stage-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 24% 18%, rgba(255, 255, 255, 0.12), transparent 32%),
+    radial-gradient(ellipse at 80% 78%, rgba(109, 138, 121, 0.06), transparent 28%);
+  opacity: 0.35;
+}
+
+@media (max-width: 900px) {
+  .wallpaper {
+    flex-direction: column;
+    padding-top: 28px;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: 34vh;
+  }
+
+  .content-primary {
+    grid-template-rows: auto minmax(220px, 1fr);
+  }
+
+  .top-gallery {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}
