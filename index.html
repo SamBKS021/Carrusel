@@ -10,12 +10,16 @@
   <div class="wallpaper">
     <aside class="sidebar">
       <img id="sidebarImage" class="sidebar-image" alt="Imagen vertical" />
+      <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
 
       <div class="sidebar-overlay">
         <div class="time-block">
           <div id="hora" class="hora">00:00</div>
           <div id="fecha" class="fecha">Lunes, 1 de enero</div>
-          <p id="frase" class="frase"></p>
+          <figure id="frase" class="frase" aria-live="polite">
+            <blockquote id="fraseTexto" class="frase-texto"></blockquote>
+            <figcaption id="fraseAutor" class="frase-autor"></figcaption>
+          </figure>
         </div>
       </div>
     </aside>
@@ -46,6 +50,7 @@
     </main>
   </div>
 
+  <script src="quotes.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
